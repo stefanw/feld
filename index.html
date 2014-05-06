@@ -1,0 +1,154 @@
+<!DOCTYPE html5>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Feld</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/feld.css">
+</head>
+<body>
+  <div id="webgl-container" class="webgl-container"></div>
+
+  <nav class="navbar navbar-feld" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Feld</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#infos">Infos zum Volksentscheid</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Orte auf dem Feld<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li class="active">
+                <a href="#flughafengebaeude">Flughafengebäude</a>
+              </li>
+              <li><a href="#tempelhoferdamm">Tempelhofer Damm</a></li>
+              <li><a href="#oderstrasse">Oderstraße</a></li>
+              <li><a href="#suedring">Südring</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <label>
+              <input class="form-control" type="checkbox" id="new-buildings"> Zeige Gebäude
+            </label>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#sonnenstand">Sonnenstand</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="section" id="main">
+    <div class="row">
+      <div class="overlay col-lg-6 col-lg-offset-3">
+        <h1>Das Tempelhofer Feld</h1>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="oderstrasse">
+    <div class="row">
+      <div class="overlay col-lg-4 col-lg-offset-8">
+        <h1>Oderstrasse</h1>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="suedring">
+    <div class="row">
+      <div class="overlay col-lg-4 col-lg-offset-8">
+        <h1>Südring</h1>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="tempelhoferdamm">
+    <div class="row">
+      <div class="overlay col-lg-4 col-lg-offset-8">
+        <h1>Tempelhofer Damm</h1>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="flughafengebaeude">
+    <div class="row">
+      <div class="overlay col-lg-4 col-lg-offset-8">
+        <h1>Flughafengebäude</h1>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="infos">
+    <div class="row">
+      <div class="overlay col-lg-6 col-lg-offset-3">
+        <h1>Infos zum Volksentscheid</h1>
+
+        <h2 class="hclass1">Teilnehmen am Volksentscheid</h2>
+        <p class="pclass1"> Wer kann Abstimmen?</p>
+        <p class="pclass2"> Um abzustimmen musst du</p>
+        <ul class="pclass2">
+          <li>deutsche StaatsbürgerIn,
+          <li>18 Jahre alt und
+          <li>seit mindestens dem 25.Februar 2014 ununterbrochen in Berlin gemeldet sein.
+        </ul>
+        <p class="ppsource"> Das ist festgelegt in $ 33 des <a href="https://www.wahlen-berlin.de/wahlinfos/recht/Abstimmungsgesetz.pdf" target="_blank">Berliner Abstimmungsgesetzes (AbstG)</a> und in § 1 des <a href="https://www.wahlen-berlin.de/wahlinfos/recht/Landeswahlgesetz.pdf" target="_blank">Landeswahlgesetzes (LWG)</a>.
+        </p>
+            <p class="pclass1"> Wo stimme ich ab?</p>
+            </br>
+            <p class="pclass2"> Im Wahllokal oder per Briefwahl.</p>
+            </br>
+
+                <p class="pclass2"> In deiner Abstimmungsbenachrichtigung ist dein Wahllokal angegeben. Hier kannst du dein Wahllokal ebenfalls suchen: <a href="https://www.wahlen-berlin.de/wahlen/EU2014/Wahllokalsuche/wahllokale.asp?sel1=3355&sel2=1065" target="_blank">Wahllokalsuche</a>.</p>
+            </br>
+
+            <p class="pclass2"> Die Briefwahlunterlagen für den Volksentscheid und die Europawahl kannst du online beantragen: <a href="https://www.wahlen-berlin.de/wahlen/EU2014/Briefwahl/Briefwahl.asp?sel1=3355&sel2=1055" target="_blank">Briefwahl</a>.</p>
+            </p>
+
+      </div>
+    </div>
+  </div>
+  <div class="section" id="sonnenstand">
+    <div class="row">
+      <div class="overlay col-lg-6 col-lg-offset-6">
+        Sonnenstand am
+        <input type="date" id="date"/>
+        um
+        <input type="time" id="time"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="credits">
+    <a href="https://www.openstreetmap.org/copyright">
+      Data © OpenStreetMap contributors
+    </a>
+    |
+    <a href="https://github.com/robhawkes/vizicities">
+      Powered by ViziCities
+    </a>
+    |
+    <a href="http://stefanwehrmeyer.com/#contact">
+      Impressum
+    </a>
+  </div>
+  <script src="js/jquery-1.11.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/vizi.js"></script>
+  <script src="js/sunlight.js"></script>
+  <script src="js/geojson-area.js"></script>
+  <script src="js/DataOverpassCustom.js"></script>
+  <script src="js/tween.js"></script>
+  <script src="js/feld.js"></script>
+</body>
+</html>

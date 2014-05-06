@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #ccc;
+  margin: 0;
+}
+.webgl-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.overlay {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.navbar-feld {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.credits {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  padding: 2px;
+}
