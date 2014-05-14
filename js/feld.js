@@ -231,14 +231,20 @@ city.init({
 
   $('#new-buildings').change(function(){
     if ($(this).prop('checked')) {
+      var material = new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors})
       _.each(features, function(feature){
-        var obj = new VIZI.Building(feature);
+        var obj = createExtrudedObject({
+          coordinates: feature.geometry.coordinates[0],
+          properties: _.defaults(feature.properties, {
+            roof: {}
+          })
+        }, city.geo.projection, material);
         buildings.push(obj);
-        city.publish('addToScene', obj.object);
+        city.publish('addToScene', obj);
       });
     } else {
       _.each(buildings, function(obj){
-        city.publish('removeFromScene', obj.object);
+        city.publish('removeFromScene', obj);
       });
       buildings = [];
     }
