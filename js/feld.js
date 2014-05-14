@@ -3,6 +3,9 @@
 'use strict';
 
 // (function(){
+VIZI.ENABLE_OUTLINES = false;
+VIZI.ENABLE_ROADS = true;
+
 VIZI.DEBUG = false;
 function THF(){
     VIZI.City.call(this);
@@ -34,6 +37,7 @@ THF.prototype.init = function(options) {
     coords: [-0.01924, 51.50358],
     capZoom: true,
     capOrbit: true,
+    overpass: true,
     overpassGridUpdate: true,
     overpassWayIntersect: false,
     controls: { enable: true }
@@ -62,6 +66,11 @@ THF.prototype.init = function(options) {
 
     // Initialise WebGL
     return self.initWebGL(options);
+  // }).then(function() {
+  //   self.publish('loadingProgress', 0.25);
+
+  //   // Initialise attribution UI
+  //   return self.initAttributionUI();
   }).then(function() {
     self.publish('loadingProgress', 0.3);
 
@@ -82,11 +91,6 @@ THF.prototype.init = function(options) {
   }).then(function() {
     self.publish('loadingProgress', 0.5);
 
-    // Set up data loader
-    self.data = new VIZI.DataOverpassCustom({
-      gridUpdate: options.overpassGridUpdate
-    });
-
     // TODO: Work out a way to use progress event of each promises to increment loading progress
     // Perhaps by looping through each promises individually and working out progress fraction by num. of promises / amount processed
 
@@ -97,7 +101,12 @@ THF.prototype.init = function(options) {
     promises.push(self.loadCoreObjects());
 
     // Load data from the OSM Overpass API
-    promises.push(self.loadOverpass(options.overpassWayIntersect));
+    if (options.overpass) {
+      self.data = new VIZI.DataOverpassCustom({
+        gridUpdate: options.overpassGridUpdate
+      });
+      promises.push(self.loadOverpass(options.overpassWayIntersect));
+    }
 
     return Q.allSettled(promises);
   }).then(function () {
@@ -222,10 +231,10 @@ city.init({
   // // add it to the scene
   // city.publish('addToScene', skyboxMesh);
 
-  var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), new THREE.MeshLambertMaterial({color: 0xCC0000}));
-  cube.position.y = 15;
-  cube.castShadow = true;
-  city.publish('addToScene', cube);
+  // var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), new THREE.MeshLambertMaterial({color: 0xCC0000}));
+  // cube.position.y = 15;
+  // cube.castShadow = true;
+  // city.publish('addToScene', cube);
 
   var buildings = [], features = [];
 
