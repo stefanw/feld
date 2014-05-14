@@ -58998,6 +58998,65 @@ process.chdir = function (dir) {
 		}, 2000);
 	};
 }());
+/* globals window, _, VIZI, Q */
+(function() {
+  "use strict";
+
+  VIZI.Attribution = function() {
+    VIZI.Log("Initialising attribution UI");
+
+    _.extend(this, VIZI.Mediator);
+
+    this.domContainer = undefined;
+    this.domViziCities = undefined;
+  };
+
+  VIZI.Attribution.prototype.init = function() {
+    this.domContainer = this.createDOMContainer();
+    this.domViziCities = this.createDOMViziCities();
+
+    return Q.fcall(function() {});
+  };
+
+  VIZI.Attribution.prototype.createDOMContainer = function() {
+    VIZI.Log("Creating attribution UI DOM container");
+
+    var container = document.createElement("div");
+    container.id = "ui-attribution-container";
+
+    container.style.position = "absolute";
+    container.style.bottom = "25px";
+    container.style.right = "30px";
+    container.style.zIndex = "9998";
+
+    document.body.appendChild(container);
+
+    return container;
+  };
+
+  VIZI.Attribution.prototype.createDOMViziCities = function() {
+    VIZI.Log("Creating attribution UI ViziCities DOM");
+
+    var vizicitiesDOM = document.createElement("div");
+    vizicitiesDOM.classList.add("ui-attribution-vizicities");
+
+    var vizicitiesLinkDOM = document.createElement("a");
+    vizicitiesLinkDOM.href = "http://github.com/robhawkes/vizicities";
+
+    vizicitiesLinkDOM.style.background = "url(data:image/png;base64,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) no-repeat";
+    vizicitiesLinkDOM.style.backgroundSize = "cover";
+    vizicitiesLinkDOM.style.display = "block";
+    vizicitiesLinkDOM.style.height = "66px";
+    vizicitiesLinkDOM.style.overflow = "hidden";
+    vizicitiesLinkDOM.style.textIndent = "-9999em";
+    vizicitiesLinkDOM.style.width = "255px";
+
+    vizicitiesDOM.appendChild(vizicitiesLinkDOM);
+    this.domContainer.appendChild(vizicitiesDOM);
+
+    return vizicitiesDOM;
+  };
+}());
 /* globals window, _, VIZI, d3 */
 (function() {
 	"use strict";
@@ -59205,6 +59264,11 @@ process.chdir = function (dir) {
 			// Initialise WebGL
 			return self.initWebGL(options);
 		}).then(function() {
+			self.publish("loadingProgress", 0.25);
+
+			// Initialise attribution UI
+			return self.initAttributionUI();
+		}).then(function() {
 			self.publish("loadingProgress", 0.3);
 
 			var promises = [];
@@ -59251,6 +59315,22 @@ process.chdir = function (dir) {
 			self.publish("loadingComplete");
 
 			VIZI.Log("Finished loading city in " + (Date.now() - startTime) + "ms");
+
+			deferred.resolve();
+		});
+
+		return deferred.promise;
+	};
+
+	VIZI.City.prototype.initAttributionUI = function() {
+		var startTime = Date.now();
+
+		var deferred = Q.defer();
+
+		this.ui.attribution = new VIZI.Attribution();
+
+		this.ui.attribution.init().then(function(result) {
+			VIZI.Log("Finished intialising attribution UI in " + (Date.now() - startTime) + "ms");
 
 			deferred.resolve();
 		});
@@ -59506,15 +59586,6 @@ process.chdir = function (dir) {
 		this.scene = new VIZI.Scene();
 		this.camera = new VIZI.Camera(options.camera);
 		this.renderer = new VIZI.Renderer(this.scene, this.camera, this.domContainer);
-		this.renderer.shadowMapEnabled = true;
-		this.renderer.shadowMapSoft = true;
-		this.renderer.shadowCameraNear = 3;
-		this.renderer.shadowCameraFar = this.camera.camera.far;
-		this.renderer.shadowCameraFov = 50;
-		this.renderer.shadowMapBias = 0.0039;
-		this.renderer.shadowMapDarkness = 0.5;
-		this.renderer.shadowMapWidth = 1024;
-		this.renderer.shadowMapHeight = 1024;
 
 		this.lights = [];
 		this.addLights();
@@ -59547,61 +59618,40 @@ process.chdir = function (dir) {
 		// this.publish("addToScene", ambientLight);
 
 		var directionalLight = new THREE.DirectionalLight( 0x999999 );
-		// directionalLight.castShadow = true;
-		directionalLight.shadowDarkness = 0.5;
-		// directionalLight.intensity = 0.1;
+		directionalLight.intesity = 0.1;
 		// THREE.ColorConverter.setHSV( directionalLight.color, 0.1, 0.1, 0.55 );
-		// directionalLight.position.x = 0;
-		// directionalLight.position.y = 1;
-		// directionalLight.position.z = -1;
-		var self = this;
-
-		var updateSunLight = function(){
-			var pos = VIZI.Geo.getInstance().centerPixels;
-			var azimuth = VIZI.Sunlight.azimuth;
-			var elevation = VIZI.Sunlight.elevation;
-			if (elevation < 0) { elevation = 0;}
-			var deg2rad = Math.PI / 180;
-			var dist = 1000;
-			azimuth += 270;
-			azimuth = azimuth % 360;
-			var x = pos[0] + Math.cos(azimuth * deg2rad) * dist;
-			var y = Math.sin(elevation * deg2rad) * dist;
-			var z = pos[1] + Math.sin(azimuth * deg2rad) * dist;
-
-			directionalLight.target.position.set(pos[0], -y / 2, pos[1]);
-			directionalLight.position.set(x, y / 2, z);
-		};
-
-		this.subscribe('centerPositionChanged', updateSunLight);
-		this.subscribe('sunlightChanged', updateSunLight);
-
+		directionalLight.position.x = 1;
+		directionalLight.position.y = 1;
+		directionalLight.position.z = 1;
 		// directionalLight.position.normalize();
-		directionalLight.castShadow = true;
-		directionalLight.shadowMapWidth = 2048;
-		directionalLight.shadowMapHeight = 2048;
-		// directionalLight.shadowCameraVisible = true;
-
-		var d = 1500;
-
-		directionalLight.shadowCameraLeft = -d * 3;
-		directionalLight.shadowCameraRight = d * 3;
-		directionalLight.shadowCameraTop = d * 3;
-		directionalLight.shadowCameraBottom = -d;
-
-		directionalLight.shadowCameraFar = 3500;
-		directionalLight.shadowBias = -0.0001;
-		directionalLight.shadowDarkness = 0.5;
 
 		this.lights.push(directionalLight);
 		this.publish("addToScene", directionalLight);
 
-		// var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-		// hemiLight.color.setHSL( 1, 1, 1 );
-		// hemiLight.groundColor.setHSL( 1, 1, 1 );
-		// hemiLight.position.set( 0, 500, 0 );
-		// this.publish("addToScene", hemiLight);
+		// var helper1 = new THREE.DirectionalLightHelper(directionalLight, 50);
+		// this.publish("addToScene", helper1);
 
+		var directionalLight2 = new THREE.DirectionalLight( 0x999999 );
+		directionalLight2.intesity = 0.1;
+		// THREE.ColorConverter.setHSV( directionalLight2.color, 0.1, 0.1, 0.5 );
+		directionalLight2.position.x = -1;
+		directionalLight2.position.y = 1;
+		directionalLight2.position.z = -1;
+		// directionalLight2.position.normalize();
+
+		this.lights.push(directionalLight2);
+		this.publish("addToScene", directionalLight2);
+
+		// var helper2 = new THREE.DirectionalLightHelper(directionalLight2, 50);
+		// this.publish("addToScene", helper2);
+
+		// var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.65 );
+		// THREE.ColorConverter.setHSV( hemiLight.color, 0.6, 0.35, 0.7 );
+		// THREE.ColorConverter.setHSV( hemiLight.groundColor, 0.095, 0.5, 0.6 );
+		// hemiLight.position.set( 0, 600, 0 );
+
+		// this.lights.push(hemiLight);
+		// this.publish("addToScene", hemiLight);
 	};
 
 	// Global helpers (move elsewhere?)
@@ -59711,7 +59761,7 @@ process.chdir = function (dir) {
 		this.lookAtTarget();
 
 		this.publish("addToScene", this.camera);
-		this.publish("addToDat", this, {name: "Camera", properties: ["cameraRadius", "theta", "phi"]});
+		this.publish("addToDat", options, {name: "Camera", properties: ["cameraRadius", "theta", "phi"]});
 
 		this.subscribe("resize", this.resize);
 		this.subscribe("zoomControl", this.zoom);
@@ -59873,7 +59923,7 @@ process.chdir = function (dir) {
 
 	VIZI.Renderer.prototype.createRenderer = function() {
 		var renderer = new THREE.WebGLRenderer({
-			antialias: true
+			antialias: false
 		});
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
@@ -59928,311 +59978,24 @@ process.chdir = function (dir) {
 		this.publish("addToScene", this.combinedObjects);
 	};
 
-	VIZI.ObjectManager.prototype.workerPromise = function(worker, features) {
+	VIZI.ObjectManager.prototype.workerPromise = function(worker, features, pixelsPerMeter) {
 		var deferred = Q.defer();
 
 		var startTime = Date.now();
-		worker.process(features).then(function(data) {
+		worker.process([features, pixelsPerMeter]).then(function(data) {
 			var timeToSend = data.startTime - startTime;
 			var timeToArrive = Date.now() - data.timeSent;
 			deferred.resolve({data: data, timeToArrive: timeToArrive, timeToSend: timeToSend});
 		});
 		return deferred.promise;
 	};
-	
-	// ##########################################
-	// Web Worker Loader
-	// ##########################################
-	// - Features (as JSON) are passed to worker manager
-	// - Worker manager splits features into batches and passes each worker a batch
-	// - Each worker processes features and passes a reference back using transferable objects
-	// - Features are added to scene for each completed worker promise
 
-	// TODO: Move feature definition and render options into separate class (eg. BuildingManager and Building)
-	//       - Right now, the generation of Three.js objects in this file is based on buildings
-	// TODO: Should be possible if geo functionality can be performed before / after the worker task
-	// TODO: Try and get rid of lock-up that occurs at beginning and end of worker process (possibly due to size of data being sent back and forth)
-	// TODO: Build objects as BufferGeometry for very easy export and messaging out of worker
-	// http://stackoverflow.com/questions/18262868/transforming-geometry-to-buffergeometry
-	// https://github.com/mrdoob/three.js/blob/f396baf5876eb41bcd2ee34eb65b1f97bb92d530/examples/js/exporters/BufferGeometryExporter.js
-	
-	VIZI.ObjectManager.prototype.processFeaturesWorker = function(features) {
-		VIZI.Log("Processing features using worker");
-
-		var deferred = Q.defer();
-
-		var geo = VIZI.Geo.getInstance();
-
-		// TODO: See if initialising this before calling processFeaturesWorker speeds things up
-		var worker = cw({
-			process: function(features, callback) {
-				importScripts("worker/three.min.js", "worker/GeometryExporter.js", "worker/underscore.min.js");
-
-				var inputSize = JSON.stringify(features).length;
-
-				var startTime = Date.now();
-
-				var exporter = new THREE.GeometryExporter();
-
-				var applyVertexColors = function( g, c ) {
-					g.faces.forEach( function( f ) {
-						var n = ( f instanceof THREE.Face3 ) ? 3 : 4;
-						for( var j = 0; j < n; j ++ ) {
-							f.vertexColors[ j ] = c;
-						}
-					} );
-				};
-
-				// Default colour
-				var colour = new THREE.Color(0xFF87FC);
-
-				// Use random colour per worker to show grouping of objects
-				// var colour = new THREE.Color(0xFFFFFF * Math.random());
-
-				var combinedGeom = new THREE.Geometry();
-
-				var count = 0;
-				
-				// TODO: Work out how to put feature-specific object generation in here
-				//       - eg. Buildings, rivers, roads, etc.
-				_.each(features, function(feature) {
-					var properties = feature.properties;
-
-					// var area = properties.area;
-
-					// // Skip if building area is too small
-					// if (area < 200) {
-					// return;
-					// }
-					
-					var offset = [];
-					var coords = feature.coordinates;
-					var shape = new THREE.Shape();
-					_.each(coords, function(coord, index) {
-						if (offset.length === 0) {
-							offset[0] = -1 * coord[0];
-							offset[1] = -1 * coord[1];
-						}
-
-						// Move if first coordinate
-						if (index === 0) {
-							shape.moveTo( coord[0] + offset[0], coord[1] + offset[1] );
-						} else {
-							shape.lineTo( coord[0] + offset[0], coord[1] + offset[1] );
-						}
-					});
-
-					// Height value is in meters
-					var height = properties.height;
-
-					var extrudeSettings = { amount: height, bevelEnabled: false };
-					var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-
-					var elementColour = (properties.colour) ? new THREE.Color(properties.colour) : colour;
-					applyVertexColors( geom, elementColour );
-
-					geom.computeFaceNormals();
-					var mesh = new THREE.Mesh(geom);
-
-					mesh.position.y = height;
-
-					// Offset building
-					mesh.position.x = -1 * offset[0];
-					mesh.position.z = -1 * offset[1];
-
-					// Flip buildings as they are up-side down
-					mesh.rotation.x = 90 * Math.PI / 180;
-
-					mesh.receiveShadow = true;
-					mesh.castShadow = true;
-
-					THREE.GeometryUtils.merge(combinedGeom, mesh);
-
-					count++;
-				});
-
-				// Move merged geom to 0,0 and return offset
-				var offset = THREE.GeometryUtils.center( combinedGeom );
-
-				var timeTaken = Date.now() - startTime;
-				var exportedGeom = exporter.parse(combinedGeom);
-
-				// The size of this seems to be the problem
-				// Work out how to reduce it
-				var outputSize = JSON.stringify(exportedGeom).length;
-
-				// Convert exported geom into a typed array
-				var verticesArray = new Float64Array( exportedGeom.vertices );
-				var normalsArray = new Float64Array( exportedGeom.normals );
-				// var colorsArray = new Float64Array( exportedGeom.colors );
-				// Seems to be manually set to have 1 array in the uvs array
-				// https://github.com/mrdoob/three.js/blob/master/examples/js/exporters/GeometryExporter.js#L231
-				var uvsArray = new Float64Array( exportedGeom.uvs[0] );
-				var facesArray = new Float64Array( exportedGeom.faces );
-
-				// Store geom typed array as Three.js model object
-				var model = {
-					metadata: exportedGeom.metadata,
-					colors: exportedGeom.colors,
-					vertices: verticesArray,
-					normals: normalsArray,
-					uvs: uvsArray,
-					faces: facesArray
-				};
-
-				var timeSent = Date.now();
-
-				var data = {model: model, offset: offset, outputSize: outputSize, inputSize: inputSize, count: count, startTime: startTime, timeTaken: timeTaken, timeSent: timeSent};
-
-				// Send exported geom back to worker manager
-				// Second parameter contains reference to typed arrays as transferable objects
-				callback(data, [model.vertices.buffer, model.normals.buffer, model.uvs.buffer, model.faces.buffer]);
-			}
-		});
-
-		var startTime = Date.now();
-
-		// TODO: Work out why this still locks up the browser (amount of data being transferred back from the worker? Is it quicker to create objects in the browser?)
-		// Solution: https://speakerdeck.com/mourner/high-performance-data-visualizations?slide=51
-		// TODO: See if simply batching objects and creating them in the browser is less sluggish for the browser
-		// TODO: Work out why not every feature is being returned in the promises (about 10–20 less than expected)
-		// TODO: Come up with a method of chosing enough batches to avoid call stack exceeded errors (too many things to render)
-		//       while not using too many batches to cause problems with small numbers of features (eg. a single feature)
-		//  - Manhattan is a good test for this
-
-		// Batch features
-		// 4 batches or below seems to stop the model.faces typed array from converting to a normal array
-		// Ideal 8 batches, if odd then subtract difference to make featuresPerBatch division clean
-		var batchCount = (features.length < 100) ? 6 : 12;
-		var batchDiff = features.length % batchCount;
-		var batches = (features.length < batchCount) ? features.length : batchCount;
-
-		var featuresPerBatch = Math.floor(features.length / batches);
-
-		var batchPromises = [];
-
-		for (var i = 0; i < batches; i++) {
-			var startIndex = i * featuresPerBatch;
-			var endIndex = startIndex + featuresPerBatch;
-			
-			// Add diff if at end of batch
-			if (i === batches - 1) {
-				endIndex += batchDiff;
-			}
-
-			var featuresBatch = features.slice(startIndex, endIndex);
-
-			batchPromises.push(this.workerPromise(worker, featuresBatch));
-		}
-
-		var loader = new THREE.JSONLoader();
-		var material = new THREE.MeshLambertMaterial({
-			vertexColors: THREE.VertexColors,
-			ambient: 0xffffff,
-			// color: 0xffffff,
-			emissive: 0xcccccc,
-			shading: THREE.FlatShading,
-		});
-
-		var self = this;
-
-		var combinedMesh;
-		Q.allSettled(batchPromises).then(function (promises) {
-			var totalReceivedTime = 0;
-
-			var combinedGeom = new THREE.Geometry();
-
-			_.each(promises, function (promise) {
-				if (promise.state === "fulfilled") {
-					var value = promise.value;
-					var data = value.data;
-
-					// Not sure how reliable the send time is
-					var timeToSend = value.timeToSend;
-					var timeToArrive = value.timeToArrive;
-					var timeTaken = data.timeTaken;
-					var inputSize = data.inputSize;
-					var outputSize = data.outputSize;
-					var count = data.count;
-					var model = data.model;
-					var offset = data.offset;
-
-					// Convert typed data back to arrays
-					model.vertices = Array.apply( [], model.vertices );
-					model.normals = Array.apply( [], model.normals );
-					// Wrap UVs within an array
-					// https://github.com/mrdoob/three.js/blob/master/examples/js/exporters/GeometryExporter.js#L231
-					model.uvs = [ Array.apply( [], model.uvs ) ];
-					model.faces = Array.apply( [], model.faces );
-
-					totalReceivedTime += timeToArrive;
-
-					VIZI.Log("Worker input sent in " + timeToSend + "ms");
-					VIZI.Log("Worker input size is " + inputSize);
-					VIZI.Log("Worker output received in " + timeToArrive + "ms");
-					VIZI.Log("Worker output size is " + outputSize);
-					VIZI.Log("Processed " + count + " features in " + timeTaken + "ms");
-
-					// TODO: Stop this locking up the browser
-					// No visible lock up at all when removed
-					var geom = loader.parse(model);
-					var mesh = new THREE.Mesh(geom.geometry, material);
-					// var mesh = new THREE.Mesh(geom.geometry);
-
-					// Use previously calculated offset to return merged mesh to correct position
-					// This allows frustum culling to work correctly
-					mesh.position.x = -1 * offset.x;
-					mesh.position.y = -1 * offset.y;
-					mesh.position.z = -1 * offset.z;
-
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
-
-					THREE.GeometryUtils.merge(combinedGeom, mesh);
-
-					// self.publish("addToScene", mesh);
-				}
-			});
-
-			var offset = THREE.GeometryUtils.center( combinedGeom );
-
-			combinedMesh = new THREE.Mesh(combinedGeom, material);
-
-			// http://stackoverflow.com/questions/20153705/three-js-wireframe-material-all-polygons-vs-just-edges
-			// TODO: Fix the performance drop that this causes (effectively double the objects in the scene)
-			// - Looks like the outline counts as "points" in renderer.info
-			// - Also looks like they aren't being frustum culled for some reason
-			// https://github.com/mrdoob/three.js/blob/master/src/extras/helpers/EdgesHelper.js
-			var outline = new THREE.EdgesHelper( combinedMesh, 0x222222 );
-			outline.material.linewidth = 1;
-
-			combinedMesh.add(outline);
-
-			// Use previously calculated offset to return merged mesh to correct position
-			// This allows frustum culling to work correctly
-			combinedMesh.position.x = -1 * offset.x;
-			combinedMesh.position.y = -1 * offset.y;
-			combinedMesh.position.z = -1 * offset.z;
-			combinedMesh.castShadow = true;
-			combinedMesh.receiveShadow = true;
-
-			self.publish("addToScene", combinedMesh);
-			
-			VIZI.Log("Average output received time is " + (totalReceivedTime / batches) + "ms");
-			VIZI.Log("Overall worker time is " + (Date.now() - startTime) + "ms");
-		}).done(function() {
-			worker.close();
-			deferred.resolve(combinedMesh);
-		});
-
-		return deferred.promise;
-	};
-
+	VIZI.ObjectManager.prototype.processFeaturesWorker = function(features) {};
 	VIZI.ObjectManager.prototype.processFeature = function(feature) {};
 
 	VIZI.ObjectManager.prototype.combineObjects = function(objects) {
 		var combinedGeom = new THREE.Geometry();
-		
+
 		_.each(objects, function(object) {
 			if (!object.object) {
 				return;
@@ -60242,55 +60005,495 @@ process.chdir = function (dir) {
 		});
 
 		combinedGeom.computeFaceNormals();
-		
+
 		return new THREE.Mesh( combinedGeom, this.combinedMaterial );
 	};
 }());
-/* globals window, _, VIZI, THREE */
+
+/* globals window, _, VIZI, THREE, Q, d3, cw */
 (function() {
-	"use strict";
+  "use strict";
 
-	VIZI.BuildingManager = function() {
-		VIZI.Log("Inititialising building manager");
+  VIZI.ObjectManagerOverpass = function() {
+    _.extend(this, VIZI.Mediator);
 
-		VIZI.ObjectManager.call(this);
-	};
+    VIZI.ObjectManager.call(this);
 
-	VIZI.BuildingManager.prototype = Object.create( VIZI.ObjectManager.prototype );
+    this.combinedMaterial = new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors});
+    this.combinedObjects = undefined;
+  };
 
-	// TODO: Utilise this when loading via Web Workers (right now it's not being called anywhere)
-	VIZI.BuildingManager.prototype.processFeature = function(feature) {
-		switch (feature.type) {
-			case "Feature":
-				return new VIZI.Building(feature);
-			default:
-				VIZI.Log("Unable to process building of type: " + feature.type);
-				return;
-		}
-	};
+  VIZI.ObjectManagerOverpass.prototype = Object.create( VIZI.ObjectManager.prototype );
 
-	VIZI.BuildingManager.prototype.debugTimes = function() {
-		var self = this;
+  // ##########################################
+  // Web Worker Loader
+  // ##########################################
+  // - Features (as JSON) are passed to worker manager
+  // - Worker manager splits features into batches and passes each worker a batch
+  // - Each worker processes features and passes a reference back using transferable objects
+  // - Features are added to scene for each completed worker promise
 
-		var totals = {};
-		_.each(self.objects, function(object) {
-			_.each(object.debugTimes, function(time, key) {
-				if (!totals[key]) {
-					totals[key] = 0;
-				}
+  // TODO: Move feature definition and render options into separate class (eg. BuildingManager and Building)
+  //       - Right now, the generation of Three.js objects in this file is based on buildings
+  // TODO: Should be possible if geo functionality can be performed before / after the worker task
+  // TODO: Try and get rid of lock-up that occurs at beginning and end of worker process (possibly due to size of data being sent back and forth)
+  // TODO: Build objects as BufferGeometry for very easy export and messaging out of worker
+  // http://stackoverflow.com/questions/18262868/transforming-geometry-to-buffergeometry
+  // https://github.com/mrdoob/three.js/blob/f396baf5876eb41bcd2ee34eb65b1f97bb92d530/examples/js/exporters/BufferGeometryExporter.js
 
-				totals[key] += time;
-			});
-		});
+  VIZI.ObjectManagerOverpass.prototype.processFeaturesWorker = function(features, pixelsPerMeter) {
+    VIZI.Log("Processing features using worker");
 
-		var averages = {};
-		_.each(totals, function(total, key) {
-			averages[key] = total / _.size(self.objects);
-		});
+    var deferred = Q.defer();
 
-		VIZI.Log({totals: totals, averages: averages});
-	};
+    // TODO: See if initialising this before calling processFeaturesWorker speeds things up
+    var worker = cw({
+      process: function(input, callback) {
+        importScripts("worker/three.min.js", "worker/GeometryExporter.js", "worker/underscore.min.js");
+
+        var features = input[0];
+        var pixelsPerMeter = input[1];
+
+        var inputSize = JSON.stringify(features).length;
+
+        var startTime = Date.now();
+
+        var exporter = new THREE.GeometryExporter();
+
+        var applyVertexColors = function( g, c ) {
+          g.faces.forEach( function( f ) {
+            var n = ( f instanceof THREE.Face3 ) ? 3 : 4;
+            for( var j = 0; j < n; j ++ ) {
+              f.vertexColors[ j ] = c;
+            }
+          } );
+        };
+
+        var createExtrudedObject = function(feature) {
+          var properties = feature.properties;
+
+          // var area = properties.area;
+
+          // // Skip if building area is too small
+          // if (area < 200) {
+          // return;
+          // }
+
+          var offset = [];
+          var coords = feature.coordinates;
+          var shape = new THREE.Shape();
+          _.each(coords, function(coord, index) {
+            if (offset.length === 0) {
+              offset[0] = -1 * coord[0];
+              offset[1] = -1 * coord[1];
+            }
+
+            // Move if first coordinate
+            if (index === 0) {
+              shape.moveTo( coord[0] + offset[0], coord[1] + offset[1] );
+            } else {
+              shape.lineTo( coord[0] + offset[0], coord[1] + offset[1] );
+            }
+          });
+
+          // Height value is in meters
+          var height = properties.height;
+
+          var extrudeSettings = { amount: height, bevelEnabled: false };
+          var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+
+          // Check if this shape only has four points, allowing us
+          // to do roof shortcuts
+          if (shape.curves.length === 4) {
+
+            // Check if it's a gabled roof
+            if (properties.roof.shape === "gabled") {
+
+              // Roof geometry
+              var roof = new THREE.Geometry();
+
+              // Grab the points from the shape
+              var points = shape.extractPoints();
+
+              // Figure out the roof height
+              var roofHeight = -(height / 2);
+
+              // Figure out the center points
+              var center1 = points.shape[0].clone().lerp(points.shape[1], 0.5);
+              var center2 = points.shape[2].clone().lerp(points.shape[3], 0.5);
+
+              // Create the vertices
+              var vertices = [
+                new THREE.Vector3(points.shape[0].x, points.shape[0].y, 0),
+                new THREE.Vector3(center1.x,         center1.y,         roofHeight),
+                new THREE.Vector3(points.shape[1].x, points.shape[1].y, 0),
+                new THREE.Vector3(points.shape[2].x, points.shape[2].y, 0),
+                new THREE.Vector3(center2.x,         center2.y,         roofHeight),
+                new THREE.Vector3(points.shape[3].x, points.shape[3].y, 0),
+              ];
+
+              // Ensure the points are clockwise
+              var clockwise = THREE.Shape.Utils.isClockWise(vertices);
+              if (!clockwise) {
+                vertices = vertices.reverse();
+              }
+
+              roof.vertices = vertices;
+
+              // Side 1
+              roof.faces.push(new THREE.Face3(3, 4, 1));
+              roof.faces.push(new THREE.Face3(3, 1, 2));
+
+              // Front/Back
+              roof.faces.push(new THREE.Face3(4, 3, 5));
+              roof.faces.push(new THREE.Face3(1, 0, 2));
+
+              // Side 2
+              roof.faces.push(new THREE.Face3(0, 1, 4));
+              roof.faces.push(new THREE.Face3(0, 4, 5));
+
+              // We aren't generating actual UVs, but the exporter needs
+              // some placeholder points
+              _.each(roof.faces, function() {
+                roof.faceVertexUvs[0].push([false, false, false]);
+              });
+
+              // Add to the building geometry
+              THREE.GeometryUtils.merge(geom, roof);
+            }
+          }
+
+          var elementColour = (properties.colour) ? new THREE.Color(properties.colour) : colour;
+          applyVertexColors( geom, elementColour );
+
+          geom.computeFaceNormals();
+          var mesh = new THREE.Mesh(geom);
+
+          mesh.position.y = height;
+
+          // Offset building
+          mesh.position.x = -1 * offset[0];
+          mesh.position.z = -1 * offset[1];
+
+          // Flip buildings as they are up-side down
+          mesh.rotation.x = 90 * Math.PI / 180;
+
+          return mesh;
+        };
+
+        // START: http://bai.dev.supcrit.com/scripts/engine/things/road.js
+
+        var thickness = 0.01 * pixelsPerMeter;
+        var width = 4 * pixelsPerMeter;
+
+        // var thickness = 1;
+        // var width = 10;
+        
+        var roadpoints = [
+          new THREE.Vector2(-thickness, width/2),
+          new THREE.Vector2(-thickness, -width/2),
+          new THREE.Vector2(thickness, -width/2),
+          new THREE.Vector2(thickness, width/2),
+          new THREE.Vector2(-thickness, width/2)
+        ];
+
+        var roadshape = new THREE.Shape(roadpoints);
+
+        // END: http://bai.dev.supcrit.com/scripts/engine/things/road.js
+
+        var createRoadObject = function(feature) {
+          var properties = feature.properties;
+
+          // Skip non-roads for simplicity
+          var type = properties.highway;
+          if (type === "footway" || type === "pedestrian" || type === "steps" || type === "cycleway") {
+            return;
+          }
+
+          var layer = Number(properties.layer);
+          
+          var featureColour = new THREE.Color(0xc1c1c1);
+          // switch (layer) {
+          //   case -1:
+          //     featureColour = new THREE.Color(0xFF0000);
+          //     break;
+          //   case 0:
+          //     featureColour = new THREE.Color(0x00FF00);
+          //     break;
+          //   case 1:
+          //     featureColour = new THREE.Color(0x0000FF);
+          //     break;
+          // }
+
+          var offset = [];
+          var splinePoints = [];
+          var coords = feature.coordinates;
+          _.each(coords, function(coord, index) {
+            if (offset.length === 0) {
+              offset[0] = -1 * coord[0];
+              offset[1] = -1 * coord[1];
+            }
+
+            // splinePoints.push(new THREE.Vector3(coord[0] + offset[0], (layer) ? 5 + layer*10 : 5, coord[1] + offset[1]));
+            splinePoints.push(new THREE.Vector3(coord[0] + offset[0], thickness/2, coord[1] + offset[1]));
+          });
+
+          var splinePath = new THREE.SplineCurve3(splinePoints);
+
+          // START: http://bai.dev.supcrit.com/scripts/engine/things/road.js
+
+          // Segments on each spline
+          // console.log(Math.max(10, Math.floor(splinePath.getLength() * 0.05)));
+          var steps = Math.max(10, Math.floor(splinePath.getLength() * 0.05));
+          var frames = {tangents: [], normals: [], binormals: []};
+          var normal = new THREE.Vector3(0,1,0);
+
+          for ( var k = 0; k < steps + 1; k++ ) {
+            var u = k / steps;
+            var tangent = splinePath.getTangentAt( u ).normalize();
+            frames.tangents[k] = tangent;
+            frames.normals[k] = normal;
+            frames.binormals[k] = tangent.clone().cross(normal);
+          }
+
+          var uvgenerator = {
+            generateTopUV: THREE.ExtrudeGeometry.WorldUVGenerator.generateTopUV,
+            generateBottomUV: THREE.ExtrudeGeometry.WorldUVGenerator.generateBottomUV,
+            generateSideWallUV:  THREE.ExtrudeGeometry.WorldUVGenerator.generateSideWallUV,
+            foo: function(geometry, extrudedShape, wallCountour, extrudeOptions, indexA, indexB, indexC, indexD, stepIndex, stepsLength, contourIndex1, contourIndex2) {
+              var v2 = new THREE.Vector2(0,1);
+              return [v2, v2, v2, v2];
+            }
+          };
+
+          var geom = new THREE.ExtrudeGeometry(roadshape, { extrudePath: splinePath, frames: frames, steps: steps, closed: false, UVGenerator: uvgenerator});
+          geom.computeVertexNormals();
+
+          // var elementColour = (properties.colour) ? new THREE.Color(properties.colour) : colour;
+          // applyVertexColors( geom, elementColour );
+
+          applyVertexColors( geom, featureColour );
+
+          // END: http://bai.dev.supcrit.com/scripts/engine/things/road.js
+
+          geom.computeFaceNormals();
+          var mesh = new THREE.Mesh(geom);
+
+          // Offset
+          mesh.position.x = -1 * offset[0];
+          mesh.position.z = -1 * offset[1];
+
+          return mesh;
+        };
+
+        // Default colour
+        var colour = new THREE.Color(0xFF87FC);
+
+        // Use random colour per worker to show grouping of objects
+        // var colour = new THREE.Color(0xFFFFFF * Math.random());
+
+        var combinedGeom = new THREE.Geometry();
+
+        var count = 0;
+
+        // TODO: Work out how to put feature-specific object generation in here
+        //       - eg. Buildings, rivers, roads, etc.
+        _.each(features, function(feature) {
+          var properties = feature.properties;
+
+          var mesh;
+          if (properties["highway"]) {
+            mesh = createRoadObject(feature);
+          } else {
+            mesh = createExtrudedObject(feature);
+          }
+
+          THREE.GeometryUtils.merge(combinedGeom, mesh);
+
+          count++;
+        });
+
+        // Move merged geom to 0,0 and return offset
+        var offset = THREE.GeometryUtils.center( combinedGeom );
+
+        var timeTaken = Date.now() - startTime;
+        var exportedGeom = exporter.parse(combinedGeom);
+
+        // The size of this seems to be the problem
+        // Work out how to reduce it
+        var outputSize = JSON.stringify(exportedGeom).length;
+
+        // Convert exported geom into a typed array
+        var verticesArray = new Float64Array( exportedGeom.vertices );
+        var normalsArray = new Float64Array( exportedGeom.normals );
+        // var colorsArray = new Float64Array( exportedGeom.colors );
+        // Seems to be manually set to have 1 array in the uvs array
+        // https://github.com/mrdoob/three.js/blob/master/examples/js/exporters/GeometryExporter.js#L231
+        var uvsArray = new Float64Array( exportedGeom.uvs[0] );
+        var facesArray = new Float64Array( exportedGeom.faces );
+
+        // Store geom typed array as Three.js model object
+        var model = {
+          metadata: exportedGeom.metadata,
+          colors: exportedGeom.colors,
+          vertices: verticesArray,
+          normals: normalsArray,
+          uvs: uvsArray,
+          faces: facesArray
+        };
+
+        var timeSent = Date.now();
+
+        var data = {model: model, offset: offset, outputSize: outputSize, inputSize: inputSize, count: count, startTime: startTime, timeTaken: timeTaken, timeSent: timeSent};
+
+        // Send exported geom back to worker manager
+        // Second parameter contains reference to typed arrays as transferable objects
+        callback(data, [model.vertices.buffer, model.normals.buffer, model.uvs.buffer, model.faces.buffer]);
+      }
+    });
+
+    var startTime = Date.now();
+
+    // TODO: Work out why this still locks up the browser (amount of data being transferred back from the worker? Is it quicker to create objects in the browser?)
+    // Solution: https://speakerdeck.com/mourner/high-performance-data-visualizations?slide=51
+    // TODO: See if simply batching objects and creating them in the browser is less sluggish for the browser
+    // TODO: Work out why not every feature is being returned in the promises (about 10–20 less than expected)
+    // TODO: Come up with a method of chosing enough batches to avoid call stack exceeded errors (too many things to render)
+    //       while not using too many batches to cause problems with small numbers of features (eg. a single feature)
+    //  - Manhattan is a good test for this
+
+    // Batch features
+    // 4 batches or below seems to stop the model.faces typed array from converting to a normal array
+    // Ideal 8 batches, if odd then subtract difference to make featuresPerBatch division clean
+    var batchCount = (features.length < 100) ? 6 : 12;
+    var batchDiff = features.length % batchCount;
+    var batches = (features.length < batchCount) ? features.length : batchCount;
+
+    var featuresPerBatch = Math.floor(features.length / batches);
+
+    var batchPromises = [];
+
+    for (var i = 0; i < batches; i++) {
+      var startIndex = i * featuresPerBatch;
+      var endIndex = startIndex + featuresPerBatch;
+
+      // Add diff if at end of batch
+      if (i === batches - 1) {
+        endIndex += batchDiff;
+      }
+
+      var featuresBatch = features.slice(startIndex, endIndex);
+
+      batchPromises.push(this.workerPromise(worker, featuresBatch, pixelsPerMeter));
+    }
+
+    var loader = new THREE.JSONLoader();
+    var material = new THREE.MeshLambertMaterial({
+      vertexColors: THREE.VertexColors,
+      ambient: 0xffffff,
+      emissive: 0xcccccc,
+      shading: THREE.FlatShading,
+    });
+
+    var self = this;
+
+    var combinedMesh;
+    Q.allSettled(batchPromises).then(function (promises) {
+      var totalReceivedTime = 0;
+
+      var combinedGeom = new THREE.Geometry();
+
+      _.each(promises, function (promise) {
+        if (promise.state === "fulfilled") {
+          var value = promise.value;
+          var data = value.data;
+
+          // Not sure how reliable the send time is
+          var timeToSend = value.timeToSend;
+          var timeToArrive = value.timeToArrive;
+          var timeTaken = data.timeTaken;
+          var inputSize = data.inputSize;
+          var outputSize = data.outputSize;
+          var count = data.count;
+          var model = data.model;
+          var offset = data.offset;
+
+          // Convert typed data back to arrays
+          model.vertices = Array.apply( [], model.vertices );
+          model.normals = Array.apply( [], model.normals );
+          // Wrap UVs within an array
+          // https://github.com/mrdoob/three.js/blob/master/examples/js/exporters/GeometryExporter.js#L231
+          model.uvs = [ Array.apply( [], model.uvs ) ];
+          
+          // Keep getting a "Maximum call stack size exceeded" error here
+          //model.faces = Array.apply( [], model.faces );
+          var faces = [];
+          _.each(model.faces, function(face) {
+            faces.push(face);
+          });
+
+          model.faces = faces;
+
+          totalReceivedTime += timeToArrive;
+
+          VIZI.Log("Worker input sent in " + timeToSend + "ms");
+          VIZI.Log("Worker input size is " + inputSize);
+          VIZI.Log("Worker output received in " + timeToArrive + "ms");
+          VIZI.Log("Worker output size is " + outputSize);
+          VIZI.Log("Processed " + count + " features in " + timeTaken + "ms");
+
+          // TODO: Stop this locking up the browser
+          // No visible lock up at all when removed
+          var geom = loader.parse(model);
+          // var mesh = new THREE.Mesh(geom.geometry, material);
+          var mesh = new THREE.Mesh(geom.geometry);
+
+          // Use previously calculated offset to return merged mesh to correct position
+          // This allows frustum culling to work correctly
+          mesh.position.x = -1 * offset.x;
+          mesh.position.y = -1 * offset.y;
+          mesh.position.z = -1 * offset.z;
+
+          THREE.GeometryUtils.merge(combinedGeom, mesh);
+
+          // self.publish("addToScene", mesh);
+        }
+      });
+
+      var offset = THREE.GeometryUtils.center( combinedGeom );
+
+      combinedMesh = new THREE.Mesh(combinedGeom, material);
+
+      // http://stackoverflow.com/questions/20153705/three-js-wireframe-material-all-polygons-vs-just-edges
+      // TODO: Fix the performance drop that this causes (effectively double the objects in the scene)
+      // - Looks like the outline counts as "points" in renderer.info
+      // - Also looks like they aren't being frustum culled for some reason
+      // https://github.com/mrdoob/three.js/blob/master/src/extras/helpers/EdgesHelper.js
+      if (VIZI.ENABLE_OUTLINES) {
+        var outline = new THREE.EdgesHelper( combinedMesh, 0x222222 );
+        outline.material.linewidth = 1;
+        combinedMesh.add(outline);
+      }
+
+      // Use previously calculated offset to return merged mesh to correct position
+      // This allows frustum culling to work correctly
+      combinedMesh.position.x = -1 * offset.x;
+      combinedMesh.position.y = -1 * offset.y;
+      combinedMesh.position.z = -1 * offset.z;
+
+      self.publish("addToScene", combinedMesh);
+
+      VIZI.Log("Average output received time is " + (totalReceivedTime / batches) + "ms");
+      VIZI.Log("Overall worker time is " + (Date.now() - startTime) + "ms");
+    }).done(function() {
+      worker.close();
+      deferred.resolve(combinedMesh);
+    });
+
+    return deferred.promise;
+  };
 }());
+
 /* globals window, _, VIZI, THREE */
 (function() {
 	"use strict";
@@ -60303,24 +60506,6 @@ process.chdir = function (dir) {
 	};
 
 	VIZI.Object.prototype.createObject = function() {};
-
-	VIZI.Object.prototype.createShapeFromCoords = function(coords) {
-		var self = this;
-		var shape = new THREE.Shape();
-
-		_.each(coords, function(element, index) {
-			var projectedCoords = self.geo.projection(element);
-
-			// Move if first coordinate
-			if (index === 0) {
-				shape.moveTo( projectedCoords[0], projectedCoords[1] );
-			} else {
-				shape.lineTo( projectedCoords[0], projectedCoords[1] );
-			}
-		});
-
-		return shape;
-	};
 }());
 /* globals window, _, VIZI, THREE */
 (function() {
@@ -60349,7 +60534,7 @@ process.chdir = function (dir) {
 
 		// var floorGeom = new THREE.PlaneGeometry(40000, 40000, 4, 4);
 		var floorGeom = new THREE.CircleGeometry(20000, 32);
-		var floorMat = new THREE.MeshBasicMaterial({color: 0xdddddd});
+		var floorMat = new THREE.MeshBasicMaterial({color: 0xf8f8f8});
 		var floor = new THREE.Mesh(floorGeom, floorMat);
 		floor.position.y = -0.4;
 		floor.rotation.x = - 90 * Math.PI / 180;
@@ -60359,84 +60544,6 @@ process.chdir = function (dir) {
 		this.publish("addToScene", floorContainer);
 
 		return floorContainer;
-	};
-}());
-/* globals window, _, VIZI, THREE */
-(function() {
-	"use strict";
-
-	VIZI.Building = function(feature) {
-		VIZI.Log("Inititialising building object");
-
-		VIZI.Object.call(this);
-
-		this.debugTimes = {
-			"createObject": 0,
-			"createShape": 0,
-			"extrude": 0,
-			"applyVertexColors": 0,
-			"createMesh": 0
-		};
-
-		this.materials = [
-			new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors})
-		];
-
-		this.object = this.createObject(feature);
-	};
-
-	VIZI.Building.prototype = Object.create( VIZI.Object.prototype );
-
-	// TODO: Handle multi-polygons
-	VIZI.Building.prototype.createObject = function(feature) {
-		var createObjectTime = Date.now();
-
-		var properties = feature.properties;
-
-		var area = properties.area;
-
-		// Skip if building area is too small
-		if (area < 200) {
-			return;
-		}
-
-		var colour = new THREE.Color(0xcccccc);
-		
-		var coords = feature.geometry.coordinates[0];
-
-		var createShapeTime = Date.now();
-		var shape = this.createShapeFromCoords(coords);
-		this.debugTimes.createShape = Date.now() - createShapeTime;
-
-		var height = (properties.height || 10) * this.geo.pixelsPerMeter;
-
-		var extrudeSettings = { amount: height, bevelEnabled: false };
-
-		var extrudeTime = Date.now();
-		var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-		this.debugTimes.extrude = Date.now() - extrudeTime;
-
-		var applyVertexColorsTime = Date.now();
-		VIZI.applyVertexColors( geom, colour );
-		this.debugTimes.applyVertexColors = Date.now() - applyVertexColorsTime;
-
-		geom.computeFaceNormals();
-
-		var createMeshTime = Date.now();
-		var mesh = new THREE.Mesh(geom, this.materials[0]);
-		this.debugTimes.createMesh = Date.now() - createMeshTime;
-
-		mesh.position.y = height;
-
-		// Flip buildings as they are up-side down
-		mesh.rotation.x = 90 * Math.PI / 180;
-
-		this.debugTimes.createObject = Date.now() - createObjectTime;
-
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-
-		return mesh;
 	};
 }());
 /* globals window, _, VIZI, Q, d3 */
@@ -60461,9 +60568,6 @@ process.chdir = function (dir) {
 		// Use IDs of processed features to prevent duplication on tile boundaries
 		// TODO: Remove ids from here when they're manually removed from view
 		this.processedIds = {};
-
-		// Object manager
-		this.objectManager = new VIZI.ObjectManager();
 
 		// URL of data source
 		this.url = "";
@@ -60501,8 +60605,7 @@ process.chdir = function (dir) {
 		});
 
 		VIZI.Log("Requesting URL", url);
-		VIZI.overpassURLs = VIZI.overpassURLs || [];
-		VIZI.overpassURLs.push('wget -O ' + cacheKey.replace(':', '-') +'.json "' + url + '"');
+
 		// Request data and fulfil promise
 		// TODO: Check that responses are being received asynchronously
 		//   - Not convinced as tile loader seems to deal with responses neartly in order
@@ -60563,17 +60666,22 @@ process.chdir = function (dir) {
 			}
 
 			// TODO: Pass-through progress event
-			self.objectManager.processFeaturesWorker(uniqueFeatures).then(function() {
+			self.generateFeatures(uniqueFeatures).then(function(mesh) {
+				// Store reference to mesh for tile
+				self.objects[cacheKey] = mesh;
 				deferred.resolve();
 			}, undefined, function(progress) {
 				// Pass-through progress
 				deferred.notify(progress);
 			});
 		}
+
+		return deferred.promise;
 	};
 
 	VIZI.Data.prototype.update = function() {};
 	VIZI.Data.prototype.process = function(data) {};
+	VIZI.Data.prototype.generateFeatures = function(uniqueFeatures) {};
 
 	VIZI.Data.prototype.checkDuplicateCoords = function(prev, current) {
 		var dupe = false;
@@ -60624,13 +60732,15 @@ process.chdir = function (dir) {
 			gridUpdate: true
 		});
 
+		this.objectManager = new VIZI.ObjectManagerOverpass();
+
 		// TODO: It's entirely possible that these queries are picking up duplicate ways. Need to look into it.
 		// TODO: Ways that cross over tile boundaries will likely get picked up by a query for each tile. Look into that.
 		// OSM Buildings handles this by not rendering items with an id that it already knows about
 		// https://github.com/kekscom/osmbuildings/blob/master/src/Data.js#L59
 		// Good Overpass queries: https://raw2.github.com/bigr/map1/master/import_osm.eu1000
 		this.queryHigh = "[out:json];" +
-			"((" + 
+			"((" +
 			// "rel({s},{w},{n},{e})[waterway~%22riverbank|dock%22];" +
 			// "rel({s},{w},{n},{e})[waterway=%22canal%22][area=%22yes%22];" +
 			// "rel({s},{w},{n},{e})[natural~%22water|scrub%22];" +
@@ -60643,11 +60753,12 @@ process.chdir = function (dir) {
 			"way({s},{w},{n},{e})[waterway=%22canal%22][area=%22yes%22];" +
 			"way({s},{w},{n},{e})[natural~%22water|scrub%22];" +
 			"way({s},{w},{n},{e})[leisure~%22park|pitch%22];" +
-			"way({s},{w},{n},{e})[landuse~%22grass|meadow|forest|cemetery%22];" +
+			"way({s},{w},{n},{e})[landuse~%22grass|meadow|forest%22];" +
+			((VIZI.ENABLE_ROADS) ? "way({s},{w},{n},{e})[highway~%22motorway|trunk|primary|secondary|tertiary|motorway_link|primary_link|secondary_link|tertiary_link|road%22];" : "") +
 			");(._;node(w);););out;";
 
 		this.queryLow = "[out:json];" +
-			"((" + 
+			"((" +
 			"rel({s},{w},{n},{e})[waterway~%22riverbank|dock%22];" +
 			"rel({s},{w},{n},{e})[waterway=%22canal%22][area=%22yes%22];" +
 			"rel({s},{w},{n},{e})[natural~%22water|scrub%22];" +
@@ -60717,7 +60828,7 @@ process.chdir = function (dir) {
 					s: 1 + bounds.n + i,
 					w: bounds.w + j
 				};
-				
+
 				var tileBoundsLonLat = self.grid.getBoundsLonLat(tileBounds);
 
 				var cacheKey = tileCoords[0] + ":" + tileCoords[1];
@@ -60824,7 +60935,7 @@ process.chdir = function (dir) {
 							s: Number(tileY) + 1,
 							w: tileX
 						};
-						
+
 						var tileBoundsLonLat = self.grid.getBoundsLonLat(tileBounds);
 
 						// VIZI.Log(tileBoundsLonLat);
@@ -60891,9 +61002,10 @@ process.chdir = function (dir) {
 		var pointCount = points.length;
 
 		var tags = element.tags || {};
-		
+
 		// Not enough points to make an object
-		if (pointCount < 4) {
+		// Ignore if a road
+		if (!tags["highway"] && pointCount < 4) {
 			return;
 		}
 
@@ -60920,7 +61032,8 @@ process.chdir = function (dir) {
 		// return;
 		// }
 
-		if (simple) {
+		// Ignore if a road
+		if (!tags["highway"] && simple) {
 			// Simplify coordinates
 			// TODO: Perform this in the worker thread
 			var simplifyTolerance = 3; // Three.js units
@@ -60941,6 +61054,7 @@ process.chdir = function (dir) {
 		tags.area = area;
 		tags.height = this.processHeight(tags);
 		tags.colour = this.processColour(tags);
+		tags.roof   = this.processRoof(tags);
 
 		// TODO: Calculate area
 		// getGeodesicArea from http://dev.openlayers.org/releases/OpenLayers-2.10/lib/OpenLayers/Geometry/LinearRing.js
@@ -60963,7 +61077,7 @@ process.chdir = function (dir) {
 		var j = numPoints-1;  // The last vertex is the 'previous' one to the first
 
 		for (var i = 0; i < numPoints; i++) {
-			area = area + (points[j][0]+points[i][0]) * (points[j][1]-points[i][1]); 
+			area = area + (points[j][0]+points[i][0]) * (points[j][1]-points[i][1]);
 			j = i;  // j is previous vertex to i
 		}
 
@@ -61001,15 +61115,27 @@ process.chdir = function (dir) {
 		return height;
 	};
 
+	VIZI.DataOverpass.prototype.processRoof = function(tags) {
+		var roof = {
+				shape  : 'flat',
+		};
+
+		if (tags["roof:shape"] !== undefined) {
+			roof.shape = tags["roof:shape"];
+		}
+
+		return roof;
+	};
+
 	VIZI.DataOverpass.prototype.processColour = function(tags) {
 		var colour;
 		if (tags["building"] || tags["building:part"]) {
-			colour = 0xffffff;
+			colour = (VIZI.ENABLE_OUTLINES) ? 0xffffff : 0xeeeeee;
 		} else if (tags["waterway"] || tags["natural"] === "water") {
 			colour = 0x6DCCFF;
 		} else if (tags["landuse"] === "forest") {
 			colour = 0x7ea410;
-		} else if (tags["natural"] === "scrub" || tags["leisure"] && /park|pitch/.test(tags["leisure"]) || tags["landuse"] && /grass|meadow|cemetery/.test(tags["landuse"])) {
+		} else if (tags["natural"] === "scrub" || tags["leisure"] && /park|pitch/.test(tags["leisure"]) || tags["landuse"] && /grass|meadow/.test(tags["landuse"])) {
 			colour = 0xc0da75;
 		} else if (tags["landuse"] && /industrial|construction|brownfield/.test(tags["landuse"])) {
 			colour = 0xd8c7b5;
@@ -61026,7 +61152,22 @@ process.chdir = function (dir) {
 
 		return colour;
 	};
+
+	VIZI.DataOverpass.prototype.generateFeatures = function(features) {
+		var self = this;
+		var deferred = Q.defer();
+		
+		self.objectManager.processFeaturesWorker(features, self.geo.pixelsPerMeter).then(function(mesh) {
+			deferred.resolve(mesh);
+		}, undefined, function(progress) {
+			// Pass-through progress
+			deferred.notify(progress);
+		});
+
+		return deferred.promise;
+	};
 }());
+
 /*jshint quotmark: false */
 /* globals VIZI, d3, Q */
 
@@ -61035,7 +61176,6 @@ process.chdir = function (dir) {
 
   VIZI.DataOverpassCache = function(options) {
     VIZI.DataOverpass.call(this, options);
-    this.commands = [];
   };
 
   VIZI.DataOverpassCache.prototype = Object.create( VIZI.DataOverpass.prototype );
@@ -61045,16 +61185,6 @@ process.chdir = function (dir) {
     var deferred = Q.defer();
 
     var fileCacheKey = cacheKey.replace(':', '-').replace('.', '_');
-
-    var resolvedUrl = url.replace(/\{([swne])\}/g, function(value, key) {
-      // Replace with paramter, otherwise keep existing value
-      return parameters[key];
-    });
-
-    this.commands.push('curl "' + resolvedUrl + '" > ' + fileCacheKey.replace(':', '-') + '.json');
-    if (this.cache.get(cacheKey)) {
-      return VIZI.DataOverpass.prototype.load.call(self, url, parameters, cacheKey);
-    }
 
     d3.json('./overpass/' + fileCacheKey + '.json', function(error, data){
       if (error) {
@@ -61375,9 +61505,16 @@ process.chdir = function (dir) {
 				self.onMouseUp(event);
 			}, false);
 
+			// Prefer wheel event, but fallback to mousewheel event if necessary
+			var wheel_event = "wheel";
+			if (window.onwheel === undefined) {
+				wheel_event = "mousewheel";
+			}
+
 			container.addEventListener("wheel", function(event) {
 				self.onMouseWheel(event);
 			}, false);
+
 		};
 
 		Mouse.prototype.onMouseDown = function(event) {
@@ -61477,8 +61614,19 @@ process.chdir = function (dir) {
 			event.preventDefault();
 
 			var state = this.state;
+
+			// Wheel event 
+			if (event.deltaY !== undefined) {
+
+				state.wheelDelta -= event.deltaY;
 			
-			state.wheelDelta -= event.deltaY;
+			// MouseWheel Event 
+			} else {
+
+				state.wheelDelta += event.wheelDeltaY;
+
+			}
+
 		};
 
 		Mouse.prototype.resetDelta = function() {
