@@ -7,8 +7,6 @@
   VIZI.DataOverpassCustom = function(options) {
     VIZI.Log("Inititialising Custom Overpass API manager");
 
-    VIZI.Data.call(this);
-
     _.defaults(options, {
       gridUpdate: true,
       urlBase: "http://overpass-api.de/api/interpreter?data=",
@@ -24,6 +22,15 @@
         ]
       }
     });
+    if (VIZI.ENABLE_ROADS) {
+      options.query.way.push(
+        'highway~"motorway|trunk|primary|secondary|tertiary|motorway_link|primary_link|secondary_link|tertiary_link|road"'
+      );
+    }
+
+    VIZI.Data.call(this);
+    this.objectManager = new VIZI.ObjectManagerOverpass();
+
 
     this.url = options.urlBase + this.buildQuery(options.query);
     this.urlHigh = this.url;
@@ -64,16 +71,36 @@
       return VIZI.DataOverpass.prototype.load.call(self, url, parameters, cacheKey);
     }
 
-    d3.json('./overpass/' + fileCacheKey + '.json', function(error, data){
-      if (error) {
-        VIZI.DataOverpass.prototype.load.call(self, url, parameters, cacheKey)
-          .then(function(){
-            deferred.resolve();
-          });
-      } else {
-        self.loadingDone(error, data, cacheKey, deferred);
-      }
+    var resolvedUrl = url.replace(/\{([swne])\}/g, function(value, key) {
+      // Replace with paramter, otherwise keep existing value
+      return parameters[key];
     });
+
+    if (this.commands === undefined) {
+      this.commands = [];
+    }
+
+    this.commands.push('curl "' + resolvedUrl + '" > ' + fileCacheKey.replace(':', '-') + '.json');
+    if (this.cache.get(cacheKey)) {
+      return VIZI.DataOverpass.prototype.load.call(self, url, parameters, cacheKey);
+    }
+
+    var allowedRange = ['17602-10752', '17602-10753', '17602-10754', '17603-10751', '17603-10752', '17603-10753', '17603-10754', '17604-10751', '17604-10752', '17604-10753', '17604-10754', '17605-10751', '17605-10752', '17605-10753', '17605-10754'];
+    if (allowedRange.indexOf(fileCacheKey) === -1) {
+      deferred.resolve();
+    } else {
+
+      d3.json('./overpass/' + fileCacheKey + '.json', function(error, data){
+        if (error) {
+          VIZI.DataOverpass.prototype.load.call(self, url, parameters, cacheKey)
+            .then(function(){
+              deferred.resolve();
+            });
+        } else {
+          self.loadingDone(error, data, cacheKey, deferred);
+        }
+      });
+    }
 
     return deferred.promise;
   };
