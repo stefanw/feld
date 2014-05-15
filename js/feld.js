@@ -243,7 +243,7 @@ city.init({
       var material = new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors})
       _.each(features, function(feature){
         var obj = createExtrudedObject({
-          coordinates: feature.geometry.coordinates[0],
+          coordinates: feature.geometry.coordinates,
           properties: _.defaults(feature.properties, {
             roof: {}
           })

@@ -25,18 +25,32 @@ window.createExtrudedObject = function(feature, projection, material) {
   // return;
   // }
 
+  var addPath = function(shape){
+    return function(element, index) {
+      var projectedCoords = projection(element);
+
+      // Move if first coordinate
+      if (index === 0) {
+        shape.moveTo( projectedCoords[0], projectedCoords[1] );
+      } else {
+        shape.lineTo( projectedCoords[0], projectedCoords[1] );
+      }
+    };
+  };
+
   var coords = feature.coordinates;
   var shape = new THREE.Shape();
-  _.each(coords, function(element, index) {
-    var projectedCoords = projection(element);
-
-    // Move if first coordinate
-    if (index === 0) {
-      shape.moveTo( projectedCoords[0], projectedCoords[1] );
-    } else {
-      shape.lineTo( projectedCoords[0], projectedCoords[1] );
+  if (coords.length > 0) {
+    _.each(coords[0], addPath(shape));
+  }
+  if (coords.length > 1) {
+    var hole;
+    for (var i = 1; i < coords.length; i += 1) {
+      hole = new THREE.Path();
+      _.each(coords[i], addPath(hole));
+      shape.holes.push(hole);
     }
-  });
+  }
 
   // Height value is in meters
   var height = properties.height;
