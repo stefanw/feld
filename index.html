@@ -27,18 +27,12 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a href="#infos">Infos zum Volksentscheid</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Orte auf dem Feld<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li class="active">
-                <a href="#flughafengebaeude">Flughafengebäude</a>
-              </li>
-              <li><a href="#tempelhoferdamm">Tempelhofer Damm</a></li>
-              <li><a href="#oderstrasse">Oderstraße</a></li>
-              <li><a href="#suedring">Südring</a></li>
-            </ul>
+          <li>
+            <a href="#overview">Übersicht</a>
           </li>
+          <li><a href="#tempelhoferdamm">Tempelhofer Damm</a></li>
+          <li><a href="#oderstrasse">Oderstraße</a></li>
+          <li><a href="#suedring">Südring</a></li>
         </ul>
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
@@ -47,9 +41,6 @@
             </label>
           </div>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#sonnenstand">Sonnenstand</a></li>
-        </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
@@ -118,16 +109,6 @@
       </div>
     </div>
   </div>
-  <div class="section" id="sonnenstand">
-    <div class="row">
-      <div class="overlay col-lg-6 col-lg-offset-6">
-        Sonnenstand am
-        <input type="date" id="date"/>
-        um
-        <input type="time" id="time"/>
-      </div>
-    </div>
-  </div>
 
   <div class="credits">
     <a href="https://www.openstreetmap.org/copyright">
@@ -145,7 +126,6 @@
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/vizi.js"></script>
-  <script src="js/sunlight.js"></script>
   <script src="js/geojson-area.js"></script>
   <script src="js/DataOverpassCustom.js"></script>
   <script src="js/tween.js"></script>

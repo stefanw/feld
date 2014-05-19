@@ -129,27 +129,25 @@ THF.prototype.init = function(options) {
 
 var city = new THF();
 
-var cameraOptions = {"capZoom":false,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[634.2703104653956,742.912980609362],"cameraRadius":6451,"theta":7,"phi":154,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40};
+var cameraOptions = {"capZoom":true,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[860.3848352080889,440.04424654556533],"cameraRadius":7349,"theta":7,"phi":154,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000};
 
 var wayPoints = {
-  flughafengebaeude: {
-    cameraOptions: {
-      "capZoom":false,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[-842.6888660882789,-1212.9093387140479],"cameraRadius":2481,"theta":75,"phi":46.5,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
-    }
+  overview: {
+    cameraOptions: _.clone(cameraOptions)
   },
   tempelhoferdamm: {
     cameraOptions: {
-      "capZoom":false,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[-1833.8094405333488,566.1597756495231],"cameraRadius":2706,"theta":143,"phi":55,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
+      "capZoom":true,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[-1470.438942166035,716.3654002568528],"cameraRadius":1996,"theta":252,"phi":91,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
     }
   },
   oderstrasse: {
     cameraOptions: {
-      "capZoom":false,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[2955.98220764394,502.3156938400838],"cameraRadius":2053,"theta":270,"phi":56.5,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
+      "capZoom":true,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[2496.4731570779963,649.1202353895497],"cameraRadius":2000,"theta":78,"phi":65,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
     }
   },
   suedring: {
     cameraOptions: {
-      "capZoom":false,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[-67.25989254753944,2289.0024268774723],"cameraRadius":2722,"theta":381.5,"phi":85.5,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
+      "capZoom":true,"capOrbit":true,"orbitCapLow":65,"orbitCapHigh":175,"coords":[13.398342,52.476684],"overpassGridUpdate":true,"overpassWayIntersect":false,"controls":{"enable":true},"target":[388.9192562717134,2240.285129070899],"cameraRadius":2722,"theta":294.5,"phi":79,"zoomCapLow":250,"zoomCapHigh":2000,"cameraFov":40,"near":2,"far":40000
     }
   }
 };
