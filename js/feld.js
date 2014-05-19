@@ -263,7 +263,13 @@ city.init({
     _.each(geojson.features, function(feature){
       feature.properties.area = feature.properties.area || geoJSONArea(feature.geometry);
       // city.data.processArea(feature.geometry.coordinates[0]);
-      feature.properties.height = feature.properties.height || 25;
+      if (!feature.properties.height) {
+        if (feature.properties.maxfloors) {
+          feature.properties.height = feature.properties.maxfloors * 3.14;
+        } else {
+          feature.properties.height = 22;
+        }
+      }
       // console.log(feature.properties);
       features.push(feature);
       $('#new-buildings').prop('checked', true).change();
