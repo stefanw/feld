@@ -14,7 +14,7 @@ var applyVertexColors = function( g, c ) {
 
 var defaultColour = new THREE.Color(0xFF87FC);
 
-window.createExtrudedObject = function(feature, projection, material) {
+window.createExtrudedObject = function(feature, geo, material) {
 
   var properties = feature.properties;
 
@@ -27,7 +27,7 @@ window.createExtrudedObject = function(feature, projection, material) {
 
   var addPath = function(shape){
     return function(element, index) {
-      var projectedCoords = projection(element);
+      var projectedCoords = geo.projection(element);
 
       // Move if first coordinate
       if (index === 0) {
@@ -53,7 +53,7 @@ window.createExtrudedObject = function(feature, projection, material) {
   }
 
   // Height value is in meters
-  var height = properties.height;
+  var height = properties.height * geo.pixelsPerMeter;
 
   var extrudeSettings = { amount: height, bevelEnabled: false };
   var geom = new THREE.ExtrudeGeometry( shape, extrudeSettings );

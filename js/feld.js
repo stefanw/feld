@@ -247,7 +247,7 @@ city.init({
           properties: _.defaults(feature.properties, {
             roof: {}
           })
-        }, city.geo.projection, material);
+        }, city.geo, material);
         buildings.push(obj);
         city.publish('addToScene', obj);
       });
